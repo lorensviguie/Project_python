@@ -4,6 +4,10 @@ from enemis import Enemis
 import map
 
 
+IS_DEBUG_MODE = False
+Enemis.IS_DEBUG_MODE = IS_DEBUG_MODE
+
+
 class Player(Entity):
     def __init__(self, position=(2, 2, 0)):
         super().__init__(
@@ -11,7 +15,8 @@ class Player(Entity):
             color=color.blue,
             scale=(1, 1, 1),
             position=position,
-            collider='box'
+            collider='box',
+            name="player"
         )
         self.attack_range = 2
 
