@@ -23,7 +23,7 @@ class HealthBar:
         self.player = player
         self.border = Entity(parent=camera.ui, model='quad', z=1, y=-0.4, x=0.4, color=color.black, scale_x=player._max_hp * 0.05, scale_y=0.02)
         self.health = Entity(parent=camera.ui, model='quad', z=1, y=-0.4, x=0.4, color=color.red, scale_x=player._current_hp * 0.05, scale_y=0.015)
-        self.name_text = Text(parent=camera.ui, text=player._name, z=1, y=-0.45, x=0.4, scale=0.05)
+        self.name_text = Text(parent=camera.ui, text=player._name, z=1, y=-0.48, x=0.4, scale=0.05)
 
     def update(self):
         self.health.scale_x = self.player._current_hp / self.player._max_hp * self.border.scale_x
