@@ -37,8 +37,9 @@ class Player(Entity):
 app = Ursina()
 
 map.initMap()
-camera.position = (5, 5, -20)
 enemis = Enemis(position=(4,4,0))
 player = Player(position=(5,4,0), texture='Assets/base.png')
-
+health_bar = HealthBar(player=player)
+def update(): 
+    camera.position = (player.x, player.y, -20)
 app.run()

@@ -22,9 +22,9 @@ def initMap():
     for y, ligne in enumerate(mapTab):
         for x, valeur in enumerate(ligne):
             if(valeur == 2):
-                Entity(model='quad', color=color.red, scale=(1, 1), position=(x, len(mapTab) - y))
+                Entity(model='cube', color=color.red, scale=(1, 1), position=(x, len(mapTab) - y))
             if(valeur == 1):
-                Entity(model='quad', color=color.green, scale=(1, 1), position=(x, len(mapTab) - y), texture='Assets/floor.png', collider='quad')
+                Entity(model='cube', color=color.green, scale=(1, 1), position=(x, len(mapTab) - y), texture='Assets/floor.png', collider='box')
             if(valeur == 3):
-                Entity(model='quad', color=color.green, scale=(1, 0.65), position=(x, len(mapTab) - y), texture='Assets/pxArt.png', collider='quad')
+                Entity(model='cube', color=color.green, scale=(1, 0.65), position=(x, len(mapTab) - y), texture='Assets/pxArt.png', collider='box')
 
