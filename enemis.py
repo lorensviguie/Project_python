@@ -29,6 +29,7 @@ class Enemis(Character):
             j = i/10
             hit_info = raycast(self.position, direction=(self.x, self.y-j, 0), distance=self.attack_range*self.look_direction, ignore=[self], debug=Enemis.IS_DEBUG_MODE)
             if hit_info.hit:
+                print([i.__class__ for i in hit_info.entities])
                 if (datetime.datetime.now()-self.last_attack).total_seconds() < self._attack_duration: return
                 self.last_attack = datetime.datetime.now()
     

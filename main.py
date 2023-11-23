@@ -39,6 +39,7 @@ app = Ursina()
 map.initMap()
 enemis = Enemis(position=(4,4,0))
 player = Player(position=(5,4,0), texture='Assets/base.png')
+player.collider.visible = True
 health_bar = HealthBar(player=player)
 def update(): 
     camera.position = (player.x, player.y, -20)

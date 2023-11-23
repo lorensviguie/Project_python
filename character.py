@@ -31,7 +31,7 @@ class Character(Entity):
         self._attack_value = attack
         self._defense_value = defense
         self._max_hp = max_hp
-        self._current_hp = max_hp
+        self._current_hp = 5
         self._dice = dice
         self._attack_range = attack_range
 

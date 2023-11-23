@@ -24,7 +24,9 @@ def initMap():
             if(valeur == 2):
                 Entity(model='cube', color=color.red, scale=(1, 1), position=(x, len(mapTab) - y))
             if(valeur == 1):
-                Entity(model='cube', color=color.green, scale=(1, 1), position=(x, len(mapTab) - y), texture='Assets/floor.png', collider='box')
+                m = Entity(model='quad', color=color.green, scale=(1, 1), position=(x, len(mapTab) - y), texture='Assets/floor.png', collider='box')
+                m.collider.visible = True
+
             if(valeur == 3):
                 Entity(model='cube', color=color.green, scale=(1, 0.65), position=(x, len(mapTab) - y), texture='Assets/pxArt.png', collider='box')
 

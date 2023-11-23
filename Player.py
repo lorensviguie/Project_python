@@ -11,7 +11,7 @@ class Player(Character):
     def get_texture(self):
         return str(self.__texture)
 
-    def __init__(self,name='test',max_hp= 10,attack=2,defense=3,dice = Dice(6), texture_creation='guerrier', move_left_choice='a', move_right_choice='d', jump_choice='space',attack_choice = 'w', texture='Assets/floor.png', position=(0,0,0)):
+    def __init__(self,name='player',max_hp= 10,attack=2,defense=3,dice = Dice(6), texture_creation='guerrier', move_left_choice='a', move_right_choice='d', jump_choice='space',attack_choice = 'w', texture='Assets/floor.png', position=(0,0,0)):
         super().__init__(name=name, max_hp=max_hp, attack=attack, defense=defense, dice=dice, texture_creation=texture_creation, texture=texture, position=position, scale=(1,1), model='quad', collider="quad")
 
         self._move_left = move_left_choice
