@@ -25,14 +25,14 @@ async def initMap():
     for y, ligne in enumerate(mapTab):
         for x, valeur in enumerate(ligne):
             if(valeur == 2):
-                m = Entity(model='quad', color=color.red, scale=(1, 1), position=(x, y), collider='box')
+                m = Entity(model='quad', scale=(1, 1), position=(x, y), collider='box', texture='Assets/mur.png')
                 #m.collider.visible = True
             if(valeur == 1):
-                m = Entity(model='quad', color=color.green, scale=(1, 1), position=(x, y), texture='Assets/floor.png', collider='box')
+                m = Entity(model='quad', scale=(1, 1), position=(x, y), texture='Assets/sol.png', collider='box')
                 #m.collider.visible = True
 
             if(valeur == 3):
-                m = Entity(model='quad', color=color.green, scale=(1, 0.65), position=(x, y), texture='Assets/pxArt.png', collider='box')
+                m = Entity(model='quad', scale=(1, 1), position=(x, y), texture='Assets/sol.png', collider='box')
                 #m.collider.visible = True
 
             if(valeur == 4):

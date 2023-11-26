@@ -3,10 +3,10 @@ from character import Character
 from dice import Dice
 
 class Player(Character):
-    _move_left = ''
-    _move_right = ''
-    _jump = ''
-    _attack = ''
+    LEFT = 'a'
+    RIGHT = 'd'
+    JUMP = 'space'
+    ATTACK = 'w'
     __texture = ''
 
     def get_texture(self):
@@ -19,52 +19,39 @@ class Player(Character):
                         defense=defense,
                         dice=dice,
                         texture_creation=texture_creation,
-                        texture=texture, position=position, scale=(1,1), model='quad', collider="box")
+                        texture=texture, position=position, scale=(1/2,1/2), model='quad', collider="box")
 
         self._move_left = move_left_choice
         self._move_right = move_right_choice
         self._jump = jump_choice
-        self._attack = attack_choice
+        #self._attack = attack_choice
         self.__texture = texture_creation
-        self.gravity = 5
         self.jump_height = 1
-        self.jump_speed = 4
-        self.y_speed = 0
-        self.is_jumping = False
-        self.is_attacking = False
+        #self.y_speed = 0
+        #self.is_attacking = False
 
 
     def update(self):
         super().update()
-        if self.is_attacking:
-            temp = str('./asset/'+ self.get_texture().split('.')[0] +'_attack.png')            
-            self.texture = temp
+
+        if held_keys[Player.JUMP] and self.touch_floor():
+            self.jump()
+        #if self.is_attacking:
+        #    temp = str('./asset/'+ self.get_texture().split('.')[0] +'_attack.png')            
+        #    self.texture = temp
 
         # Gestion du déplacement avec les touches du clavier
-        if held_keys[self._move_left]:
-            self.x -= 5 * time.dt
-        if held_keys[self._move_right]:
-            self.x += 5 * time.dt
-
-        # Gestion des collisions avec la carte
-        """hit_info = raycast(self.position, self.down, distance=0.4, ignore=[self])
-        if hit_info.hit:
-            self.y = hit_info.world_point[1] + 0.4  # Ajustement de la hauteur après la collision
-            self.y_speed = 0
-            self.is_jumping = False"""
-
-        # Gestion du saut avec la barre d'espace
-        if held_keys[self._jump] and not self.is_jumping:
-            self.y_speed = self.jump_speed
-            self.is_jumping = True
-
-        # Gestion de l'attaque avec la touche spécifiée
-        if held_keys[self._attack]:
+        if held_keys[Player.LEFT]:
+            self.move_left()
+        if held_keys[Player.RIGHT]:
+            self.move_right()
+        if held_keys[Player.ATTACK]:
             self.attack_animation()
 
+
         # Rétablir le skin original après la fin de l'attaque
-        if not self.is_attacking:
-            self.texture =str('./asset/'+ str(self.get_texture()))
+        #if not self.is_attacking:
+        #    self.texture =str('./asset/'+ str(self.get_texture()))
 
 
     def attack_animation(self):

@@ -22,7 +22,7 @@ class Enemis(Character):
         )
         self._attack_duration = attack_duration
         self.last_attack:datetime=datetime.datetime.now()
-        self.look_direction = 1    # 1 -> left   -1 -> right
+        
     
     def attack_ray(self:Enemis):
         for i in range(0,51):
