@@ -36,7 +36,7 @@ class Character(Entity):
         self._attack_power = attack
         self._defense_power = defense
         self._attack_range = attack_range
-        self._sensor_range = 0
+        self._sensor_range = 2
 
         self._is_jumping = False
         self._gravity = True
@@ -161,3 +161,14 @@ class Character(Entity):
             y = center[1] + radius * math.sin(angle)
             points.append((x, y))
         return points
+    
+    def demi_cercle_coords(self, angle_start=-110, angle_end=80, centre=(0,0)):
+        pas_angle=20
+        coords = []
+        for angle in range(angle_start, angle_end + 1, pas_angle):
+            angle_rad = math.radians(angle)
+            x = centre[0] + self._sensor_range * math.cos(angle_rad)
+            y = centre[1] + self._sensor_range * math.sin(angle_rad)
+            coords.append((x, y))
+        return coords
+

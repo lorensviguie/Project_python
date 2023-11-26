@@ -23,23 +23,33 @@ class Enemis(Character):
         )
         self._attack_duration = attack_duration
         self.last_attack:datetime=datetime.datetime.now()
+    
+    def update(self):
+        super().update()
+        can_attack, target = self.attack_ray()
+        if can_attack:
+            if (datetime.datetime.now()-self.last_attack).total_seconds() < self._attack_duration: return
+            self.last_attack = datetime.datetime.now()
+            self.attack_target(target)
         
     
-    def attack_ray(self:Enemis):
-        for i in range(0,81):
-            j = i/10
-            hit_info = raycast(self.position, direction=(self.x, self.y-j, 0), distance=self.attack_range*self.look_direction, ignore=[self], debug=Enemis.IS_DEBUG_MODE)
-            if hit_info.hit:
-                target:Entity = hit_info.entity
-                if target.name == "player":
-                    #print([i.__class__ for i in hit_info.entities])
-                    if (datetime.datetime.now()-self.last_attack).total_seconds() < self._attack_duration: return
-                    self.last_attack = datetime.datetime.now()
-                    self.attack_target(target)
+    def attack_ray(self:Enemis)->(bool,Entity):
+        for y in self.demi_cercle_coords(-120,90, (self.x, self.y)):
+            hit_info = raycast(self.position, direction=(y[0]*self.look_direction, y[1], 0), distance=self._attack_range, ignore=[self], debug=Enemis.IS_DEBUG_MODE)
+            if not hit_info.hit: continue
+
+            target:Entity = hit_info.entity
+            if target.name != "player": continue
+
+            return (True, target)
+        return (False, None)
+
+
+
     
     def sensore_ray(self:Enemis):
         for y in self.points_on_circle(50, (self.x, self.y)):
-            hit_info = raycast(self.position, direction=(y[0], y[1], 0), distance=self.attack_range*2, ignore=[self], debug=Enemis.IS_DEBUG_MODE)
+            hit_info = raycast(self.position, direction=(y[0], y[1], 0), distance=self._sensor_range, ignore=[self], debug=Enemis.IS_DEBUG_MODE)
             if hit_info.hit:
                 target:Entity = hit_info.entity
                 if target.name == "player":

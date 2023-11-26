@@ -5,7 +5,7 @@ from enemis import Enemis
 import map
 import asyncio
 
-IS_DEBUG_MODE = True
+IS_DEBUG_MODE = False
 Enemis.IS_DEBUG_MODE = IS_DEBUG_MODE
 
 
