@@ -83,7 +83,7 @@ class Character(Entity):
         return False
     
     def is_alive(self)->bool:
-        return self._current_hp > 0
+        return self._current_health > 0
     
     # Méthodes d'actions
 
@@ -116,13 +116,13 @@ class Character(Entity):
 
     def take_damage(self, amount):
         if amount < 0: return
-        if self._current_hp - amount < 0:
-            amount = self._current_hp
-        self._current_hp -= amount
+        if self._current_health - amount < 0:
+            amount = self._current_health
+        self._current_health -= amount
     
     def defense_self(self, damages:int, attacker:Character):
         roll = self._dice.roll()
-        wounds = self.damage(damages, roll, attacker)
+        wounds = self.defense(damages, roll, attacker)
         self.take_damage(wounds)
     
     def attack_target(self, target:Character)->None:
