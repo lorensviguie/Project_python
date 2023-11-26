@@ -33,10 +33,19 @@ class Character(Entity):
         self._max_hp = max_hp
         self._current_hp = 5
         self._dice = dice
+        self.y_speed = 0
+        self.gravity = 5
         self._attack_range = attack_range
+        self.gravity_impact = False
 
     def update(self):
         self.ray_detection()
+        self.fall()
+
+        if not self.intersects().hit:
+            self.gravity_impact = True
+        else:
+            self.gravity_impact = False
     
     def points_on_circle(self, num_points, center=(0, 0)):
         radius = 360*num_points
@@ -93,3 +102,8 @@ class Character(Entity):
         roll = self._dice.roll()
         wounds = self.compute_defense(damages, roll, attacker)
         self.decrease_health(wounds)
+
+    def fall(self):
+        if self.gravity_impact:
+            self.y_speed -= self.gravity * time.dt
+            self.y += self.y_speed * time.dt

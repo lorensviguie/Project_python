@@ -1,8 +1,9 @@
 from ursina import *
 from Player import Player
-from character import Dice
+from dice import Dice
 from enemis import Enemis
 import map
+import asyncio
 
 IS_DEBUG_MODE = False
 Enemis.IS_DEBUG_MODE = IS_DEBUG_MODE
@@ -19,28 +20,12 @@ class HealthBar:
 
 
 
-"""
-class Player(Entity):
-    def __init__(self, position=(2, 2, 0)):
-        super().__init__(
-            model='sphere',
-            color=color.blue,
-            scale=(1, 1, 1),
-            position=position,
-            collider='box',
-            name="player"
-        )
-        self.attack_range = 2
-        """
-
-
 app = Ursina()
+loop = asyncio.get_event_loop()
+player = loop.run_until_complete(map.initMap())
 
-map.initMap()
-enemis = Enemis(position=(4,4,0))
-player = Player(position=(5,4,0), texture='Assets/base.png')
-player.collider.visible = True
 health_bar = HealthBar(player=player)
+
 def update(): 
     camera.position = (player.x, player.y, -20)
 app.run()
