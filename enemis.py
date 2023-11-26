@@ -8,15 +8,17 @@ class Enemis(Character):
 
     IS_DEBUG_MODE=False
 
-    def __init__(self, max_health=10, defense=0, attack=4, attack_range=1, attack_duration=1, position=(0,0,0), texture='Assets/frog_right.png'):
+    def __init__(self, max_health=10, defense=0, height=1/2, width=1/2,attack=4, attack_range=1, attack_duration=1, position=(0,0,0), texture='Assets/frog_right.png'):
         super().__init__(
             max_health=max_health,
             defense=defense,
             attack=attack,
             attack_range=attack_range,
+            height=height,
+            width=width,
 
             model='quad',
-            scale=(1,1),
+            scale=(width,height),
             position=position,
             texture=texture,
             collider="box"

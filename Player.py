@@ -12,14 +12,16 @@ class Player(Character):
     def get_texture(self):
         return str(self.__texture)
 
-    def __init__(self,name='player',max_hp= 10,attack=2,defense=3,dice = Dice(6), texture_creation='guerrier', move_left_choice='a', move_right_choice='d', jump_choice='space',attack_choice = 'w', texture='Assets/floor.png', position=(0,0,0)):
+    def __init__(self,name='player', height=1/3, width=1/3, weight=2, speed=3,max_hp= 10,attack=2,defense=3,dice = Dice(6), texture_creation='guerrier', move_left_choice='a', move_right_choice='d', jump_choice='space',attack_choice = 'w', texture='Assets/floor.png', position=(0,0,0)):
         super().__init__(name=name,
                         max_hp=max_hp,
                         attack=attack,
+                        speed=speed,
                         defense=defense,
                         dice=dice,
+                        weight=weight,
                         texture_creation=texture_creation,
-                        texture=texture, position=position, scale=(1/2,1/2), model='quad', collider="box")
+                        texture=texture, position=position, scale=(width,height), model='quad', collider="box")
 
         self._move_left = move_left_choice
         self._move_right = move_right_choice
@@ -45,8 +47,10 @@ class Player(Character):
         # Gestion du déplacement avec les touches du clavier
         if held_keys[Player.LEFT]:
             self.move_left()
+            self.texture='Assets/base2.png'
         if held_keys[Player.RIGHT]:
             self.move_right()
+            self.texture='Assets/base.png'
         if held_keys[Player.ATTACK]:
             self.attack_animation()
 

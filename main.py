@@ -14,6 +14,8 @@ loop = asyncio.get_event_loop()
 player = loop.run_until_complete(map.initMap())
 
 
-def update(): 
-    camera.position = (player.x, player.y, -20)
+def update():
+    camera.position = (player.x, player.y, -15)
+
 app.run()
+

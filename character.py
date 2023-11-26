@@ -24,19 +24,21 @@ Player:
 
 
 class Character(Entity):
-    def __init__(self, name:str = "Anonymous", attack:int = 8, defense:int = 3, max_hp:int = 20, attack_range=0, dice:Dice=Dice(6), **kwargs) -> None:
+    def __init__(self, name:str = "Anonymous", attack:int = 8, defense:int = 3, max_hp:int = 20, attack_range=0, dice:Dice=Dice(6),height=1, width=1, weight=5, speed=5 ,**kwargs) -> None:
         super().__init__(**kwargs)
 
         self._name = name
 
         self._max_health = max_hp
         self._current_health = max_hp
-        self._weight = 5
-        self._speed = 5
+        self._weight = weight
+        self._speed = speed
         self._attack_power = attack
         self._defense_power = defense
         self._attack_range = attack_range
         self._sensor_range = 2
+        self._height = height
+        self._width = width
 
         self._is_jumping = False
         self._gravity = True
@@ -45,7 +47,7 @@ class Character(Entity):
         self.look_direction = 1    # 1 -> left   -1 -> right
         self._dice = dice
 
-        self.jump_speed = 4
+        self.jump_speed = 2
         self.y_speed = 0
 
     def update(self):

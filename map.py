@@ -5,19 +5,24 @@ from Player import Player
 UNITE_DE_MESURE = 1 * 0.5
 
 
-#     0 -> Air    1 -> Sol    2 -> Mur 3 -> Sol Volant    4 -> Enemis    5->Player
+#     0 -> Air    1 -> Sol    2 -> Mur 3 -> Sol Volant    4 -> Enemis    5->Player   6-> mur plein
 
 mapTab = [
-    [2,0,0,0,0,0,0,0,0,0,0,0,0],
-    [2,0,0,0,0,0,0,0,0,0,0,0,0],
-    [2,0,0,0,0,0,0,0,0,0,0,3,0],
-    [2,0,0,0,0,0,3,0,0,0,0,0,0],
-    [2,3,0,0,0,0,0,0,0,0,0,0,0],
-    [2,0,0,0,0,0,0,0,0,0,0,0,0],
-    [2,1,1,0,0,0,0,0,0,0,0,0,0],
-    [2,0,0,0,0,0,0,3,3,0,0,0,0],
-    [2,5,0,0,4,0,0,0,0,0,0,0,0],
-    [2,1,1,1,1,1,1,1,1,1,1,1,1]
+    [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [2,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0],
+    [2,5,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,0,3,3,0,0,0,0],
+    [2,0,0,0,4,0,0,0,0,0,0,1,1,0,0,0,4,0,0,0,0,0,0,1,1],
+    [2,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0],
+    [2,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0],
+    [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [2,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1],
+    [2,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0],
+    [6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],
+    [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],
+    [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],
+    [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],
+    [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6]
 ]
 
 async def initMap():
@@ -25,22 +30,20 @@ async def initMap():
     for y, ligne in enumerate(mapTab):
         for x, valeur in enumerate(ligne):
             if(valeur == 2):
-                m = Entity(model='quad', scale=(1, 1), position=(x, y), collider='box', texture='Assets/mur.png')
-                #m.collider.visible = True
+                m = Entity(model='quad', scale=(1/2, 1/2), position=(x/2, y/2), collider='box', texture='Assets/mur.png', enabled=True)
             if(valeur == 1):
-                m = Entity(model='quad', scale=(1, 1), position=(x, y), texture='Assets/sol.png', collider='box')
-                #m.collider.visible = True
+                m = Entity(model='quad', scale=(1/2, 1/2), position=(x/2, y/2), texture='Assets/sol.png', collider='box', enabled=True)
 
             if(valeur == 3):
-                m = Entity(model='quad', scale=(1, 1), position=(x, y), texture='Assets/sol.png', collider='box')
-                #m.collider.visible = True
+                m = Entity(model='quad', scale=(1/2, 1/2), position=(x/2, y/2), texture='Assets/sol.png', collider='box', enabled=True)
+
+            if(valeur == 6):
+                m = Entity(model='quad', scale=(1/2, 1/2), position=(x/2, y/2), texture='Assets/murplein.png', enabled=True)
 
             if(valeur == 4):
-                time.sleep(1)
-                enemis = Enemis(position=(x, y))
+                enemis = Enemis(position=(x/2, y/2))
 
             if(valeur == 5):
-                time.sleep(1)
-                player = Player(position=(6,4,0), texture='Assets/base.png')
+                player = Player(position=(x/2,y/2,0), texture='Assets/base.png')
     return player
 
