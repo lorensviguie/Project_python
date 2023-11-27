@@ -93,14 +93,13 @@ loop.run_until_complete(map.initMap())
 camera.position=(0.5,6,-15)
 def update():
     global player
-    if get_window_status() == False:
-        if player == None:
-            print(classe)
-            map.spawnPlayer(eval(classe))
-            player = map.player
-        else:
-            Player._can_moove = True
-            camera.position = (player.x, player.y, -15)
-            map.showMap()
+    if get_window_status(): return
+    if player == None:
+        map.spawnPlayer(eval(classe))
+        player = map.player
+    else:
+        Player._can_moove = True
+        camera.position = (player.x, player.y, -15)
+        map.showMap()
 
 app.run()

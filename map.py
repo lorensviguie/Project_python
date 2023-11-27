@@ -29,9 +29,9 @@ class Map(Entity):
         self._player = None
         self._map_is_initiate = False
     
-    def spawnPlayer(self, test):
-        self._player = test(position=(2/2,9/2,0), texture='Assets/base.png', enabled=False)
-        self._player._gravity = True
+    def spawnPlayer(self, classe):
+        self._player = classe(position=(2/2,9/2,0), texture='Assets/base.png', enabled=True)
+        self.player._gravity = False
 
     @property
     def player(self)->Player:

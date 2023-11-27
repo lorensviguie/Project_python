@@ -16,20 +16,7 @@ class Player(Character):
     _texture_base_R = ""
     _texture_base_G = ""
 
-    def get_texture(self):
-        return str(self.__texture)
-    
-    def get_texture_base(self):
-        return self._texture_base_G , self._texture_base_R
-    def get_texture_base_G(self):
-        return self._texture_base_G
-    def get_texture_base_R(self):
-        return self._texture_base_R
-    def set_texture_base(self, base_G,base_D):
-        self._texture_base_G = base_G
-        self._texture_base_R = base_D
-
-    def __init__(self,name='player', height=1/3, width=1/3, weight=2, attack_duration=1, speed=3,max_hp= 10,attack=2,attack_range=2,defense=3,dice = Dice(6), texture_creation='guerrier', move_left_choice='a', move_right_choice='d', jump_choice='space', texture='Assets/floor.png', position=(0,0,0), enabled=False):
+    def __init__(self,name='player', height=1/3, width=1/3, weight=2, attack_duration=1, speed=3,max_hp= 10,attack=2,attack_range=2,defense=3,dice = Dice(6), texture_creation='guerrier', move_left_choice='a', move_right_choice='d', jump_choice='space', texture='Assets/floor.png', position=(0,0,0), enabled=True):
         super().__init__(name=name,
                          attack_range=attack_range,
                         max_hp=max_hp,
@@ -59,7 +46,6 @@ class Player(Character):
 
     def update(self):
         super().update()
-        print(self.y)
         if (Player._can_moove):
             if held_keys[Player.JUMP] and self.touch_floor():
                 self.jump()
@@ -76,6 +62,20 @@ class Player(Character):
 
             if held_keys[Player.ATTACK]:
                 self.attack()
+    
+    
+    def get_texture(self):
+        return str(self.__texture)
+    
+    def get_texture_base(self):
+        return self._texture_base_G , self._texture_base_R
+    def get_texture_base_G(self):
+        return self._texture_base_G
+    def get_texture_base_R(self):
+        return self._texture_base_R
+    def set_texture_base(self, base_G,base_D):
+        self._texture_base_G = base_G
+        self._texture_base_R = base_D
         
     
     def attack_ray(self:Player)->(bool,Entity):
