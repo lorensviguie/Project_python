@@ -104,4 +104,13 @@ class Warrior(Player):
     def __init__(self, name='player', height=1 / 3, width=1 / 3, weight=2, speed=3, max_hp=10, attack=2, defense=3, dice=Dice(6), texture_creation='guerrier', move_left_choice='a', move_right_choice='d', jump_choice='space', attack_choice='w', texture='Assets/floor.png', position=(0, 0, 0), enabled=False):
         super().__init__(name, height, width, weight, speed, max_hp, attack, defense, dice, texture_creation, move_left_choice, move_right_choice, jump_choice, attack_choice, texture, position, enabled)
         self.set_texture_base("Assets/warrior2.png","Assets/warrior.png")
-    
+
+class Mage(Player):
+    def __init__(self, name='player', height=1 / 3, width=1 / 3, weight=2, speed=3, max_hp=10, attack=2, defense=3, dice=Dice(6), texture_creation='guerrier', move_left_choice='a', move_right_choice='d', jump_choice='space', attack_choice='w', texture='Assets/floor.png', position=(0, 0, 0), enabled=False):
+        super().__init__(name, height, width, weight, speed, max_hp, attack, defense, dice, texture_creation, move_left_choice, move_right_choice, jump_choice, attack_choice, texture, position, enabled)
+        self.set_texture_base("Assets/mage.png","Assets/mage.png")
+
+class Thief(Player):
+    def __init__(self, name='player', height=1 / 3, width=1 / 3, weight=2, speed=3, max_hp=10, attack=2, defense=3, dice=Dice(6), texture_creation='guerrier', move_left_choice='a', move_right_choice='d', jump_choice='space', attack_choice='w', texture='Assets/floor.png', position=(0, 0, 0), enabled=False):
+        super().__init__(name, height, width, weight, speed, max_hp, attack, defense, dice, texture_creation, move_left_choice, move_right_choice, jump_choice, attack_choice, texture, position, enabled)
+        self.set_texture_base("Assets/thief.png","Assets/thief1.png")

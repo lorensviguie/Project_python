@@ -1,5 +1,5 @@
 from ursina import *
-from Player import Player
+from Player import *
 from dice import Dice
 from enemis import Enemis
 from map import Map
@@ -8,6 +8,7 @@ import asyncio
 IS_DEBUG_MODE = False
 Enemis.IS_DEBUG_MODE = IS_DEBUG_MODE
 is_Homewindow_Open = True
+classe = "Warrior"
 
 def get_window_status():
     return is_Homewindow_Open
@@ -23,12 +24,18 @@ class GameWindow(Entity):
         self.create_game_window()
 
     def on_warrior_button_click(self):
+        global classe
+        classe = "Warrior"
         print("Bouton Warrior cliqué !")
 
     def on_mage_button_click(self):
+        global classe
+        classe = "Mage"
         print("Bouton Mage cliqué !")
 
     def on_thief_button_click(self):
+        global classe
+        classe = "Thief"
         print("Bouton Thief cliqué !")
 
     def create_game_window(self):
@@ -75,17 +82,24 @@ game_window = GameWindow()
 
 loop = asyncio.get_event_loop()
 
-map = Map()
+
+
+
+map=Map(eval(classe))
+player = None
+#eval(f"map=Map({classe})")
 loop.run_until_complete(map.initMap())
-player = map.player
-player._gravity = False
-player.select_clas("warrior")
 camera.position=(0.5,6,-15)
 def update():
+    global player
     if get_window_status() == False:
-        player.set_can_moove(True)
-        player._gravity = True
-        camera.position = (player.x, player.y, -15)
-    map.showMap()
+        if player == None:
+            map.spawnPlayer(eval(classe))
+            player = map.player
+        else:
+            player.set_can_moove(True)
+            player._gravity = True
+            camera.position = (player.x, player.y, -15)
+            map.showMap()
 
 app.run()

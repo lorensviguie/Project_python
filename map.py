@@ -25,10 +25,12 @@ class Map(Entity):
         [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,2]
     ]
 
-    def __init__(self):
-        self._player = Player(position=(2/2,9/2,0), texture='Assets/base.png', enabled=False)
+    def __init__(self,test):
+        self._player = None
         self._map_is_initiate = False
-
+    
+    def spawnPlayer(self, test):
+        self._player = test(position=(2/2,9/2,0), texture='Assets/base.png', enabled=False)
 
     @property
     def player(self)->Player:
@@ -48,7 +50,6 @@ class Map(Entity):
                     Map.mapTab[y][x] = Entity(model='quad', scale=(1/2, 1/2), position=(x/2, y/2), texture='Assets/murplein.png', enabled=False)
                 if(valeur == 4):
                     Map.mapTab[y][x] = Enemis(position=(x/2, y/2), enabled=False)
-        self.player.enable()
         self._map_is_initiate = True
     
     def showMap(self):
