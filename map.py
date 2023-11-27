@@ -58,6 +58,8 @@ class Map(Entity):
                 if type(zone) != Entity and type(zone) != Enemis: continue
                 if zone.x in np.arange(self.player.current_zone[0]-8, self.player.current_zone[0]+8, 0.5) and zone.y in np.arange(self.player.current_zone[1]-4, self.player.current_zone[1]+4, 0.5) :
                     zone.enable()
+                    if type(zone) is Enemis and not zone.is_alive():
+                        zone.disable()
                 else:
                     if l != len(Map.mapTab)-1:
                         if type(zone) is Entity and type(Map.mapTab[l+1][h]) is Enemis and type(Map.mapTab[l+1][h]).enabled: continue
