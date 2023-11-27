@@ -7,6 +7,7 @@ import asyncio
 
 IS_DEBUG_MODE = False
 Enemis.IS_DEBUG_MODE = IS_DEBUG_MODE
+Player.IS_DEBUG_MODE = IS_DEBUG_MODE
 
 
 app = Ursina()

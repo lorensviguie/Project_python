@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dice import Dice
 from ursina import *
+import numpy as np
 
 
 """
@@ -159,7 +160,7 @@ class Character(Entity):
     # Autres méthodes
     
     def points_on_circle(self, num_points, center=(0, 0)):
-        radius = 360*num_points
+        radius = 180
         points = []
         for i in range(num_points):
             angle = 2 * math.pi * i / num_points
@@ -168,13 +169,16 @@ class Character(Entity):
             points.append((x, y))
         return points
     
-    def demi_cercle_coords(self, angle_start=-110, angle_end=80, centre=(0,0)):
-        pas_angle=20
-        coords = []
-        for angle in range(angle_start, angle_end + 1, pas_angle):
-            angle_rad = math.radians(angle)
-            x = centre[0] + self._sensor_range * math.cos(angle_rad)
-            y = centre[1] + self._sensor_range * math.sin(angle_rad)
-            coords.append((x, y))
-        return coords
+    def demi_cercle_coords(self, num_points=10, centre=(0, 0), angle_start=-45, angle_end=45):
+        radius = 180
+        if angle_start >= angle_end:
 
+            angle_start, angle_end = angle_end, angle_start
+            
+        points = []
+        for i in range(num_points):
+            angle = math.radians(angle_start + (angle_end - angle_start) * i / (num_points - 1))
+            x = centre[0] + radius * math.cos(angle)
+            y = centre[1] + radius * math.sin(angle)
+            points.append((x, y))
+        return points
