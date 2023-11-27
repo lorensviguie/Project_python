@@ -59,6 +59,7 @@ class Player(Character):
 
     def update(self):
         super().update()
+        print(self.y)
         if (Player._can_moove):
             if held_keys[Player.JUMP] and self.touch_floor():
                 self.jump()

@@ -87,22 +87,19 @@ loop = asyncio.get_event_loop()
 
 
 
-map=Map(eval(classe))
+map=Map()
 player = None
-#eval(f"map=Map({classe})")
 loop.run_until_complete(map.initMap())
-player = map.player
-player._gravity = False
 camera.position=(0.5,6,-15)
 def update():
     global player
     if get_window_status() == False:
         if player == None:
+            print(classe)
             map.spawnPlayer(eval(classe))
             player = map.player
         else:
-            player.set_can_moove(True)
-            player._gravity = True
+            Player._can_moove = True
             camera.position = (player.x, player.y, -15)
             map.showMap()
 

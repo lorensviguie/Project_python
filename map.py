@@ -25,12 +25,13 @@ class Map(Entity):
         [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,2]
     ]
 
-    def __init__(self,test):
+    def __init__(self):
         self._player = None
         self._map_is_initiate = False
     
     def spawnPlayer(self, test):
         self._player = test(position=(2/2,9/2,0), texture='Assets/base.png', enabled=False)
+        self._player._gravity = True
 
     @property
     def player(self)->Player:
