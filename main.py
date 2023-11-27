@@ -7,6 +7,7 @@ import asyncio
 
 IS_DEBUG_MODE = False
 Enemis.IS_DEBUG_MODE = IS_DEBUG_MODE
+Player.IS_DEBUG_MODE = IS_DEBUG_MODE
 is_Homewindow_Open = True
 classe = "Warrior"
 
@@ -77,6 +78,7 @@ class GameWindow(Entity):
     def hide(self):
         self.disable()
 
+
 app = Ursina()
 game_window = GameWindow()
 
@@ -89,6 +91,8 @@ map=Map(eval(classe))
 player = None
 #eval(f"map=Map({classe})")
 loop.run_until_complete(map.initMap())
+player = map.player
+player._gravity = False
 camera.position=(0.5,6,-15)
 def update():
     global player
