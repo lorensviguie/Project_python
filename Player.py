@@ -12,7 +12,7 @@ class Player(Character):
     def get_texture(self):
         return str(self.__texture)
 
-    def __init__(self,name='player', height=1/3, width=1/3, weight=2, speed=3,max_hp= 10,attack=2,defense=3,dice = Dice(6), texture_creation='guerrier', move_left_choice='a', move_right_choice='d', jump_choice='space',attack_choice = 'w', texture='Assets/floor.png', position=(0,0,0)):
+    def __init__(self,name='player', height=1/3, width=1/3, weight=2, speed=3,max_hp= 10,attack=2,defense=3,dice = Dice(6), texture_creation='guerrier', move_left_choice='a', move_right_choice='d', jump_choice='space',attack_choice = 'w', texture='Assets/floor.png', position=(0,0,0), enabled=False):
         super().__init__(name=name,
                         max_hp=max_hp,
                         attack=attack,
@@ -37,7 +37,6 @@ class Player(Character):
 
     def update(self):
         super().update()
-
         if held_keys[Player.JUMP] and self.touch_floor():
             self.jump()
         #if self.is_attacking:

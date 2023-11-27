@@ -51,7 +51,7 @@ class Character(Entity):
         self.y_speed = 0
 
     def update(self):
-        if not self.touch_floor():
+        if not self.touch_floor() and self.enabled:
             self.fall()
         
         self.ray_detection()
@@ -139,12 +139,16 @@ class Character(Entity):
     # Méthodes d'information
 
     @property
-    def name(self):
+    def name(self)->str:
         return self._name
     
     @property
-    def attack_range(self):
+    def attack_range(self)->int:
         return self._attack_range
+    
+    @property
+    def current_zone(self)->(int,int):
+        return (round(self.x*2)/2,round(self.y*2)/2)
     
     def damage(self, roll, target:Character):
         return self._attack_power + roll
