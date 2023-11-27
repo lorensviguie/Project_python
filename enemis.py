@@ -8,7 +8,7 @@ class Enemis(Character):
 
     IS_DEBUG_MODE=False
 
-    def __init__(self, max_health=10, defense=0, height=1/2, width=1/2,attack=4, attack_range=1, attack_duration=1, position=(0,0,0), texture='Assets/frog_right.png'):
+    def __init__(self, max_health=10, defense=0, height=1/2, width=1/2,attack=4, attack_range=1, attack_duration=1, position=(0,0,0), texture='Assets/frog_right.png', enabled=False):
         super().__init__(
             max_health=max_health,
             defense=defense,
@@ -16,6 +16,7 @@ class Enemis(Character):
             attack_range=attack_range,
             height=height,
             width=width,
+            enabled=enabled,
 
             model='quad',
             scale=(width,height),

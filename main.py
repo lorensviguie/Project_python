@@ -2,7 +2,7 @@ from ursina import *
 from Player import Player
 from dice import Dice
 from enemis import Enemis
-import map
+from map import Map
 import asyncio
 
 IS_DEBUG_MODE = False
@@ -73,11 +73,15 @@ app = Ursina()
 game_window = GameWindow()
 
 loop = asyncio.get_event_loop()
-player = loop.run_until_complete(map.initMap())
+
+map = Map()
+loop.run_until_complete(map.initMap())
+player = map.player
 
 def update():
     if get_window_status() == False:
         player.set_can_moove(True)
     camera.position = (player.x, player.y, -15)
+    map.showMap()
 
 app.run()
