@@ -8,6 +8,7 @@ class Player(Character):
     JUMP = 'space'
     ATTACK = 'w'
     __texture = ''
+    ATTACK_SOUND = Audio("Quack.mp3")
 
     def get_texture(self):
         return str(self.__texture)
@@ -52,6 +53,7 @@ class Player(Character):
             self.texture='Assets/base.png'
         if held_keys[Player.ATTACK]:
             self.attack_animation()
+            self.attack()
 
 
         # Rétablir le skin original après la fin de l'attaque
@@ -68,6 +70,9 @@ class Player(Character):
 
     def end_attack_animation(self):
         self.is_attacking = False
+    
+    def attack(self):
+        Player.ATTACK_SOUND.play()
 
 class HealthBar:
     def __init__(self, player: Player):
