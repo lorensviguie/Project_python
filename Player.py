@@ -8,6 +8,7 @@ class Player(Character):
     JUMP = 'space'
     ATTACK = 'w'
     __texture = ''
+    _can_moove = False
 
     def get_texture(self):
         return str(self.__texture)
@@ -33,26 +34,25 @@ class Player(Character):
         self.health_bar = HealthBar(self)
         #self.y_speed = 0
         #self.is_attacking = False
-
+    def set_can_moove(self,move=True):
+        self._can_moove = move
+    def get_can_move(self):
+        return self._can_moove
 
     def update(self):
         super().update()
+        if (self.get_can_move()):
+            if held_keys[Player.JUMP] and self.touch_floor():
+                self.jump()
 
-        if held_keys[Player.JUMP] and self.touch_floor():
-            self.jump()
-        #if self.is_attacking:
-        #    temp = str('./asset/'+ self.get_texture().split('.')[0] +'_attack.png')            
-        #    self.texture = temp
-
-        # Gestion du déplacement avec les touches du clavier
-        if held_keys[Player.LEFT]:
-            self.move_left()
-            self.texture='Assets/base2.png'
-        if held_keys[Player.RIGHT]:
-            self.move_right()
-            self.texture='Assets/base.png'
-        if held_keys[Player.ATTACK]:
-            self.attack_animation()
+            if held_keys[Player.LEFT]:
+                self.move_left()
+                self.texture='Assets/base2.png'
+            if held_keys[Player.RIGHT]:
+                self.move_right()
+                self.texture='Assets/base.png'
+            if held_keys[Player.ATTACK]:
+                self.attack_animation()
 
 
         # Rétablir le skin original après la fin de l'attaque
