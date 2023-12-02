@@ -1,31 +1,27 @@
 from __future__ import annotations
 from dice import Dice
 from ursina import *
-import numpy as np
 
-
-"""
-Valeur par default :
-
-Character :
-- attack : 4
-- defense : 0
-- max_hp : 10
-- attack_range : 0
-
-Enemis :
-Default
-- attack_range : 1
-
-Player:
-- attack : 8
-- defense : 3
-- max_hp : 20
-"""
 
 
 class Character(Entity):
-    def __init__(self, name:str = "Anonymous", attack:int = 8, defense:int = 3, max_hp:int = 20, attack_range=0, dice:Dice=Dice(6),height=1, width=1, weight=5, speed=5 ,**kwargs) -> None:
+
+    CAN_MOVE = False
+
+    def __init__(self,
+                 name:str = "Anonymous",
+                 attack:int = 8,
+                 defense:int = 3,
+                 max_hp:int = 20,
+                 attack_range:int=0,
+                 attack_duration:float=0,
+                 dice:Dice=Dice(6),
+                 height:float=1,
+                 width:float=1,
+                 weight:int=5,
+                 speed:int=5,
+                 **kwargs) -> None:
+        
         super().__init__(**kwargs)
 
         self._name = name
@@ -35,6 +31,7 @@ class Character(Entity):
         self._weight = weight
         self._speed = speed
         self._attack_power = attack
+        self._attack_duration = attack_duration
         self._defense_power = defense
         self._attack_range = attack_range
         self._sensor_range = 2
@@ -43,9 +40,10 @@ class Character(Entity):
 
         self._is_jumping = False
         self._gravity = True
-        self._is_attacking = False
 
-        self.look_direction = 1    # 1 -> left   -1 -> right
+        self._textures = ()
+
+        self.look_direction = 0    # 0 -> left   1 -> right
         self._dice = dice
 
         self.jump_speed = 2
@@ -58,30 +56,29 @@ class Character(Entity):
         self.ray_detection()
     
 
-
     # Méthodes de status
 
     def touch_floor(self)->bool:
         for entity in self.intersects().entities:
-            if entity.y <= self.y:
+            if entity.y < self.y:
                 return True
         return False
     
     def touch_roof(self)->bool:
         for entity in self.intersects().entities:
-            if entity.y >= self.y:
+            if entity.y >= self.current_zone[1] and entity.x == self.current_zone[0]:
                 return True
         return False
     
-    def touch_left_side(self)->bool:   # //! Ne marche pas
+    def touch_left_side(self)->bool:
         for entity in self.intersects().entities:
-            if entity.x <= self.x:   # //TODOO Check la position y de l'objet pour voir si c'est pas l'obstacle du dessous (actuellement bloque le perso quand il est au sol)
+            if entity.x <= self.x and entity.y == self.current_zone[1]:
                 return True
         return False
     
-    def touch_right_side(self)->bool:  # //! Ne marche pas
+    def touch_right_side(self)->bool:
         for entity in self.intersects().entities:
-            if entity.x >= self.x:   # //TODOO Check la position y de l'objet pour voir si c'est pas l'obstacle du dessous (actuellement bloque le perso quand il est au sol)
+            if entity.x >= self.x and entity.y == self.current_zone[1]:
                 return True
         return False
     
@@ -98,13 +95,13 @@ class Character(Entity):
         return
     
     def move_left(self)->None:
-        #? Patch to used : if self.touch_left_side(): return
+        if self.touch_left_side(): return
 
         self.x -= self._speed * time.dt
         return
     
     def move_right(self)->None:
-        #? Patch to used : if self.touch_right_side(): return
+        if self.touch_right_side(): return
 
         self.x += self._speed * time.dt
         return
@@ -134,8 +131,10 @@ class Character(Entity):
         roll = self._dice.roll()
         damages = self.damage(roll, target)
         target.defense_self(damages, self)
-    
 
+    def heal(self, heal_value)->None:
+        self._current_health = min(self._current_health+heal_value, self._max_health)
+    
     
     # Méthodes d'information
 
@@ -146,6 +145,10 @@ class Character(Entity):
     @property
     def attack_range(self)->int:
         return self._attack_range
+    
+    @property
+    def max_health(self)->int:
+        return self._max_health
     
     @property
     def current_zone(self)->(int,int):

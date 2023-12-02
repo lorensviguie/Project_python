@@ -1,28 +1,49 @@
 from ursina import *
 from enemis import Enemis
 from Player import Player
+from Zone import Zone,Sol,Mur,SolVolant,MurPlein,MurCassable,Heal,Activable,End
 import numpy as np
 
 class Map(Entity):
 
-    #     0 -> Air    1 -> Sol    2 -> Mur 3 -> Sol Volant    4 -> Enemis    5->Player   6-> mur plein
+    #     0 -> Air    1 -> Sol    2 -> Mur 3 -> Sol Volant    4 -> Enemis   6-> mur plein  7 -> mur cassable  8-> heal  9-> activable
+
+    intToZone = {
+        0:"",
+        1:"Sol",
+        2:"Mur",
+        3:"SolVolant",
+        4:"Enemis",
+        6:"MurPlein",
+        7:"MurCassable",
+        8:"Heal",
+        9:"Activable",
+        "E":"End"
+    }
+
 
     mapTab = [
-        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
-        [2,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,2],
-        [2,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,0,3,3,0,0,0,0,2],
-        [2,0,0,0,4,0,0,0,0,0,0,1,1,0,0,0,4,0,0,0,0,0,0,1,1,2],
-        [2,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,2],
-        [2,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,2],
-        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
-        [2,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,2],
-        [2,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,2],      #24/15
-        [6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2],
-        [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,2],
-        [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,2],
-        [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,2],
-        [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,2],
-        [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,2]
+        [0,0,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,4,0,0],
+        [2,4,0,0,0,0,3,3,0,0,3,3,3,3,3,0,0,0,0,0,0,0,3,2,0,0,0,3,3,3,2],
+        [2,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,3,0,0,2,0,4,0,7,7,7,0],
+        [2,0,0,0,3,3,0,0,0,3,0,0,0,0,0,0,0,0,0,0,4,0,0,0,3,3,0,7,7,7,0],
+        [0,0,0,2,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,3,3,3,7,2],
+        [0,7,0,2,8,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,9,0,2],
+        [9,2,0,0,3,0,0,0,3,3,0,0,0,0,3,3,0,2,0,4,0,0,0,0,0,4,7,'E',9,0,2],
+        [3,0,0,0,0,0,0,0,0,0,0,3,0,0,4,0,0,2,3,3,7,3,3,3,3,3,3,3,3,0,2],
+        [0,0,0,0,0,0,0,3,0,0,0,0,0,3,3,3,0,2,0,0,0,0,0,0,2,0,0,0,0,0,2],
+        ['S',0,0,0,0,0,0,0,0,0,3,3,3,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,3,2],
+        [3,7,3,3,0,0,0,0,0,3,0,0,0,0,4,3,3,2,0,0,0,0,4,2,0,3,3,0,0,0,2],
+        [4,0,0,0,0,3,3,3,3,0,0,2,0,3,3,0,0,2,0,8,0,0,2,2,0,0,0,0,0,0,2],
+        [2,0,0,0,0,0,0,0,0,7,3,2,0,0,0,0,0,2,3,3,3,0,2,2,0,0,0,0,3,0,2],
+        [2,0,3,3,3,3,3,3,3,0,0,0,3,0,0,0,0,0,0,0,0,0,2,2,0,3,0,0,0,0,2],
+        [2,0,0,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,3,3,0,2],
+        [2,0,4,0,0,0,0,0,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+        [2,0,3,3,0,0,0,0,3,3,2,3,0,0,0,0,0,0,0,0,0,0,0,3,3,0,0,0,0,3,2],
+        [2,0,0,0,0,0,0,0,0,8,2,0,0,0,0,0,0,0,4,0,0,0,3,0,0,0,2,0,0,0,2],
+        [2,3,0,3,3,3,3,3,3,3,3,4,0,0,0,0,4,2,9,9,9,2,8,0,0,0,2,0,0,0,2],
+        [0,0,9,0,0,0,0,0,0,0,0,3,3,3,3,0,3,2,0,0,0,2,3,3,3,0,2,4,0,4,2],
+        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
     ]
 
     def __init__(self):
@@ -30,41 +51,37 @@ class Map(Entity):
         self._map_is_initiate = False
     
     def spawnPlayer(self, classe):
-        self._player = classe(position=(2/2,9/2,0), texture='Assets/base.png', enabled=True)
-        self.player._gravity = False
+        self._player = classe(position=(0,11/2,0), enabled=True)
+        self.player._gravity = True
 
     @property
     def player(self)->Player:
         return self._player
 
+    #     0 -> Air    1 -> Sol    2 -> Mur 3 -> Sol Volant    4 -> Enemis   6-> mur plein  7 -> mur cassable  8-> heal  9-> activable
     async def initMap(self):
         Map.mapTab.reverse()
         for y, ligne in enumerate(Map.mapTab):
             for x, valeur in enumerate(ligne):
-                if(valeur == 2):
-                    Map.mapTab[y][x] = Entity(model='quad', scale=(1/2, 1/2), position=(x/2, y/2), collider='box', texture='Assets/mur.png', enabled=False)
-                if(valeur == 1):
-                    Map.mapTab[y][x] = Entity(model='quad', scale=(1/2, 1/2), position=(x/2, y/2), texture='Assets/sol.png', collider='box', enabled=False)
-                if(valeur == 3):
-                    Map.mapTab[y][x] = Entity(model='quad', scale=(1/2, 1/2), position=(x/2, y/2), texture='Assets/sol.png', collider='box', enabled=False)
-                if(valeur == 6):
-                    Map.mapTab[y][x] = Entity(model='quad', scale=(1/2, 1/2), position=(x/2, y/2), texture='Assets/murplein.png', enabled=False)
-                if(valeur == 4):
-                    Map.mapTab[y][x] = Enemis(position=(x/2, y/2), enabled=False)
+
+                if valeur == 0 or valeur == "S": continue
+
+                Map.mapTab[y][x] = getattr(sys.modules[__name__], Map.intToZone[valeur])(position=(x/2, y/2))
+
         self._map_is_initiate = True
     
     def showMap(self):
         if not self._map_is_initiate: return
         for l, ligne in enumerate(Map.mapTab):
             for h, zone in enumerate(ligne):
-                if type(zone) != Entity and type(zone) != Enemis: continue
-                if zone.x in np.arange(self.player.current_zone[0]-8, self.player.current_zone[0]+8, 0.5) and zone.y in np.arange(self.player.current_zone[1]-4, self.player.current_zone[1]+4, 0.5) :
+                if zone == 0 or zone == "S" or (type(zone) is not Enemis and not zone.is_spawn): continue
+                if zone.x in np.arange(self.player.current_zone[0]-Player.VISION[0], self.player.current_zone[0]+Player.VISION[0], 0.5) and zone.y in np.arange(self.player.current_zone[1]-Player.VISION[1], self.player.current_zone[1]+Player.VISION[1], 0.5) :
                     zone.enable()
                     if type(zone) is Enemis and not zone.is_alive():
                         zone.disable()
                 else:
                     if l != len(Map.mapTab)-1:
-                        if type(zone) is Entity and type(Map.mapTab[l+1][h]) is Enemis and type(Map.mapTab[l+1][h]).enabled: continue
+                        if type(Map.mapTab[l+1][h]) is Enemis and type(Map.mapTab[l+1][h]).enabled: continue
                     zone.disable()
 
 

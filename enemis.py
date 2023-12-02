@@ -1,4 +1,3 @@
-# Frog  Dog  Humans
 from __future__ import annotations
 from ursina import *
 from character import Character
@@ -8,7 +7,19 @@ class Enemis(Character):
 
     IS_DEBUG_MODE=False
 
-    def __init__(self, name="enemis",max_health=10, defense=0, height=1/2, width=1/2,attack=4, attack_range=1, attack_duration=1, position=(0,0,0), texture='Assets/frog_right.png', enabled=False):
+    def __init__(self,
+                 name="enemis",
+                 max_health=6,
+                 defense=0,
+                 height=1/2,
+                 width=1/2,
+                 attack=4,
+                 attack_range=1,
+                 attack_duration=1,
+                 position=(0,0,0),
+                 textures=('Assets/frog_left.png','Assets/frog_right.png'),
+                 enabled=False):
+        
         super().__init__(
             name=name,
             max_health=max_health,
@@ -22,9 +33,11 @@ class Enemis(Character):
             model='quad',
             scale=(width,height),
             position=position,
-            texture=texture,
+            texture=textures[1],
             collider="box"
         )
+
+        self._textures = textures
         self.health_bar = HealthBar(self)
         self._attack_duration = attack_duration
         self.last_attack:datetime=datetime.datetime.now()
@@ -61,12 +74,12 @@ class Enemis(Character):
             if hit_info.hit:
                 target:Entity = hit_info.entity
                 if target.name == "player":
-                    if target.x > self.x and self.look_direction == -1:
+                    if target.x > self.x and self.look_direction == 0:
                         self.look_direction = 1
-                        self.texture = 'Assets/frog_right.png'
+                        self.texture = self._textures[self.look_direction]
                     elif target.x < self.x and self.look_direction == 1:
-                        self.look_direction = -1
-                        self.texture = 'Assets/frog_left.png'
+                        self.look_direction = 0
+                        self.texture = self._textures[self.look_direction]
 
 
     def ray_detection(self:Enemis):
@@ -76,8 +89,8 @@ class Enemis(Character):
 class HealthBar:
     def __init__(self, enemis: Enemis):
         self.enemis = enemis
-        self.border = Entity(parent=enemis, model='quad', z=1, y=0.6, x=0.1, color=color.black, scale_x=enemis._max_health * 0.05, scale_y=0.1)
-        self.health = Entity(parent=enemis, model='quad', z=1, y=0.6, x=0.1, color=color.red, scale_x=enemis._current_health * 0.05, scale_y=0.1)
+        self.border = Entity(parent=enemis, model='quad', z=1, y=0.6, x=0.1, color=color.black, scale_x=enemis._max_health * 0.05, scale_y=0.05)
+        self.health = Entity(parent=enemis, model='quad', z=1, y=0.6, x=0.1, color=color.red, scale_x=enemis._current_health * 0.05, scale_y=0.05)
 
     def updateHealth(self):
         self.health.scale_x = self.enemis._current_health / self.enemis._max_health * self.border.scale_x

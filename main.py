@@ -1,6 +1,5 @@
 from ursina import *
 from Player import *
-from dice import Dice
 from enemis import Enemis
 from map import Map
 import asyncio
@@ -8,6 +7,9 @@ import asyncio
 IS_DEBUG_MODE = False
 Enemis.IS_DEBUG_MODE = IS_DEBUG_MODE
 Player.IS_DEBUG_MODE = IS_DEBUG_MODE
+
+SOUND_ON = False
+
 is_Homewindow_Open = True
 classe = "Warrior"
 
@@ -56,8 +58,9 @@ class GameWindow(Entity):
         self.duck2 = Entity(model='quad', texture='/base.png', scale=(1.5, 1.5), position=(-1.4, 6.5, -1))
         self.duck3 = Entity(model='quad', texture='/base.png', scale=(1.5, 1.5), position=(0.7, 6.5, -1))
 
-        self.music = Audio("musique_Tetris.mp3", loop=True)
-        self.music.play()
+        if SOUND_ON:
+            self.music = Audio("musique_Tetris.mp3", loop=True)
+            self.music.play()
 
     def on_play_button_click(self):
         print("Bouton PLAY cliqué !")
@@ -83,12 +86,10 @@ app = Ursina()
 game_window = GameWindow()
 
 loop = asyncio.get_event_loop()
-
-
-
-
+ 
 map=Map()
 player = None
+
 loop.run_until_complete(map.initMap())
 camera.position=(0.5,6,-15)
 def update():
@@ -98,8 +99,8 @@ def update():
         map.spawnPlayer(eval(classe))
         player = map.player
     else:
-        Player._can_moove = True
-        camera.position = (player.x, player.y, -15)
+        Character.CAN_MOVE = True
+        camera.position = (player.x, player.y, -10)
         map.showMap()
 
 app.run()
