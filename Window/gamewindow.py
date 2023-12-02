@@ -24,8 +24,8 @@ class GameWindow(Window):
     def update(self):
         if not self._player.is_alive():
             Character.CAN_MOVE = False
-            camera.z=-15
             self._player.disable()
+            #Window.CURRENT_WINDOW=2
         else:
             Character.CAN_MOVE = True
             self._camera.position = (self._player.x, self._player.y, -10)
