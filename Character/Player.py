@@ -97,8 +97,8 @@ class Player(Character):
         return (False, None)
 
 
-    def defense_self(self, damages:int, attacker:Character):
-        super().defense_self(damages, attacker)
+    def defense_self(self, damages:int, attacker:Character, reduce_dmg:int = 1):
+        super().defense_self(damages * reduce_dmg, attacker)
         self.health_bar.updateHealth()
         
     def heal(self, heal_value):
@@ -141,11 +141,24 @@ class HealthBar:
 class Warrior(Player):
     def __init__(self,position=(0,11/2,0), textures=("Assets/warrior2.png","Assets/warrior.png"), enabled=True):
         super().__init__(textures, enabled, position=position)
+    def compute_damages(self, roll, target: Character):
+        print("🪓 Bonus: Axe in your face (+3 attack)")
+        return super().compute_damages(roll, target) + 3 
 
 class Mage(Player):
     def __init__(self,position=(0,11/2,0), textures=("Assets/mage.png","Assets/mage.png"), enabled=True):
         super().__init__(textures=textures, enabled=enabled, position=position)
+    def defense_self(self, damages: int, attacker: Character):
+        return super().defense_self(damages, attacker,reduce_dmg=0.5)
 
 class Thief(Player):
     def __init__(self, position=(0,11/2,0), textures=("Assets/thief.png","Assets/thief1.png"), enabled=True):
         super().__init__(textures=textures, enabled=enabled, position=position)
+    def compute_damages(self, roll, target: Character):
+        print(f"🔪 Bonus: Sneacky attack (+{target.get_defense_value()} damages)")
+        return super().compute_damages(roll, target) + target.get_defense_value()
+
+
+
+
+

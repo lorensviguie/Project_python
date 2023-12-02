@@ -1,8 +1,15 @@
 # Project_python Groupe number 15
 
+## prérequis 
+```powershell
+pip install ursina
+```
+[doc officiel](https://www.ursinaengine.org/installation.html)
 
 ## a rendre le 04 decembre 2023 a geoffroy@gl-conseil.dev
-a game for our project python 
+
+
+## organisation de notre projet 
 
 | Fonctionnalité                   | Status  | Description                                                                  |
 | -------------------------------- | ------- | ---------------------------------------------------------------------------- |
@@ -16,6 +23,13 @@ a game for our project python
 | Systeme de combat                | partiel | Permet au joueur de se battre                                                |
 | liées fenetre accueil et le jeux | check   | permet au joueur d'avoir un ecran d'acceuil                                  |
 | fenetre de mort                  | Work    | permet de mourir                                                             |
+| fenetre de victoire              | Work    | permet de gagner                                                             |
 |                                  |         |                                                                              |
 
-description du jeux : 
+description du jeux :  
+
+
+Dans ce jeu fou, vous incarnerez un canard.  
+Vous aurez le choix entre plusieurs types de classes qui influenceront légèrement le gameplay.  
+Votre objectif est soit d'éliminer tous les monstres, soit d'activer deux leviers cachés dans la carte.  
+Vous pouvez vous déplacer et attaquer dans les niveaux, mais les ennemis pourront aussi vous attaquer.
