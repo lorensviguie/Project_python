@@ -14,7 +14,7 @@ class Enemis(Character):
                  height=1/2,
                  width=1/2,
                  attack=4,
-                 attack_range=1,
+                 attack_range=0.8,
                  attack_duration=1,
                  position=(0,0,0),
                  textures=('Assets/frog_left.png','Assets/frog_right.png'),
@@ -55,7 +55,11 @@ class Enemis(Character):
     
     def attack_ray(self:Enemis)->(bool,Entity):
         for y in self.demi_cercle_coords(centre=(self.x, self.y)):
-            hit_info = raycast(self.position, direction=(y[0]*self.look_direction, y[1], 0), distance=self._attack_range, ignore=[self], debug=type(self).IS_DEBUG_MODE)
+            if self.look_direction == 0:
+                h_direction = -1
+            else:
+                h_direction = 1
+            hit_info = raycast(self.position, direction=(y[0]*h_direction, y[1], 0), distance=self._attack_range, ignore=[self], debug=type(self).IS_DEBUG_MODE)
             if not hit_info.hit: continue
 
             target:Entity = hit_info.entity

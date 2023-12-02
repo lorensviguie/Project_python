@@ -23,7 +23,7 @@ class Player(Character):
                  speed=3,
                  max_hp=10,
                  attack=2,
-                 attack_range=2,
+                 attack_range=1,
                  defense=3,
                  dice=Dice(6),
                  textures=("Assets/base2.png","Assets/base.png"),
@@ -78,7 +78,11 @@ class Player(Character):
     
     def attack_ray(self:Player)->(bool,Entity):
         for y in self.demi_cercle_coords(centre=(self.x, self.y)):
-            hit_info = raycast(self.position, direction=(y[0]*self.look_direction, y[1], 0), distance=self._attack_range, ignore=[self], debug=type(self).IS_DEBUG_MODE)
+            if self.look_direction == 0:
+                h_direction = -1
+            else:
+                h_direction = 1
+            hit_info = raycast(self.position, direction=(y[0]*h_direction, y[1], 0), distance=self._attack_range, ignore=[self], debug=type(self).IS_DEBUG_MODE)
 
             if not hit_info.hit: continue
 
