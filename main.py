@@ -88,7 +88,7 @@ game_window = GameWindow()
 loop = asyncio.get_event_loop()
  
 map=Map()
-player = None
+player:Character = None
 
 loop.run_until_complete(map.initMap())
 camera.position=(0.5,6,-15)
@@ -99,8 +99,13 @@ def update():
         map.spawnPlayer(eval(classe))
         player = map.player
     else:
-        Character.CAN_MOVE = True
-        camera.position = (player.x, player.y, -10)
-        map.showMap()
+        if not player.is_alive():
+            Character.CAN_MOVE = False
+            camera.z=-15
+            player.disable()
+        else:
+            Character.CAN_MOVE = True
+            camera.position = (player.x, player.y, -10)
+            map.showMap()
 
 app.run()

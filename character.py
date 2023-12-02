@@ -60,7 +60,7 @@ class Character(Entity):
 
     def touch_floor(self)->bool:
         for entity in self.intersects().entities:
-            if entity.y < self.y:
+            if entity.y < self.y and entity.x == self.current_zone[0]:
                 return True
         return False
     

@@ -12,9 +12,8 @@ class Player(Character):
     JUMP = 'space'
     ATTACK = 'left mouse'
     DESTROY = 'right mouse'
-    __texture = ''
 
-    VISION = (6,3)
+    VISION = (4.5,2.5)
 
     def __init__(self,
                  name='player',
@@ -112,7 +111,6 @@ class Player(Character):
         self.ATTACK_SOUND.play()
         can_attack, target = self.attack_ray("enemis")
         if can_attack:
-            print("can attack")
             self.attack_target(target)
     
     def destroyBlock(self):
@@ -121,7 +119,6 @@ class Player(Character):
         self.ATTACK_SOUND.play()
         can_destroy, target = self.attack_ray("cassable")
         if can_destroy:
-            print("can destroy")
             target:MurCassable
             target.decrease_health()
 
