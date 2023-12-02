@@ -2,8 +2,8 @@ from ursina import *
 from character import Character
 
 class Zone(Entity):
-    def __init__(self, texture='Assets/sol.png', position=(0,0), enabled=False, scale=(1/2,1/2)):
-        super().__init__(scale=scale, collider='box', enabled=enabled, model='quad', texture=texture, position=position)
+    def __init__(self, name="zone", texture='Assets/sol.png', position=(0,0), enabled=False, scale=(1/2,1/2)):
+        super().__init__(name=name, scale=scale, collider='box', enabled=enabled, model='quad', texture=texture, position=position)
         self._is_spawn = True
     
     @property
@@ -27,8 +27,15 @@ class MurPlein(Zone):
         super().__init__(position=position, texture=texture, enabled=enabled)
 
 class MurCassable(Zone):
-    def __init__(self, position=(0,0), texture='Assets/soldestructible.png', enabled=False):
-        super().__init__(position=position, texture=texture, enabled=enabled)
+    def __init__(self, name="cassable", position=(0,0), texture='Assets/soldestructible.png', enabled=False):
+        super().__init__(name=name,position=position, texture=texture, enabled=enabled)
+        self._health = 2
+    
+    def decrease_health(self):
+        self._health -= 1
+        if self._health == 0:
+            self.disable()
+            self._is_spawn = False
 
 class Heal(Zone):
     def __init__(self, position=(0,0), texture='Assets/health.png', enabled=False, scale=(1/4,1/4)):

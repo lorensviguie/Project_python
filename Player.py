@@ -2,6 +2,7 @@ from __future__ import annotations
 from ursina import *
 from character import Character
 from dice import Dice
+from Zone import MurCassable
 import datetime
 
 class Player(Character):
@@ -10,6 +11,7 @@ class Player(Character):
     RIGHT = 'd'
     JUMP = 'space'
     ATTACK = 'left mouse'
+    DESTROY = 'right mouse'
     __texture = ''
 
     VISION = (6,3)
@@ -75,8 +77,11 @@ class Player(Character):
             if held_keys[Player.ATTACK]:
                 self.attack()
 
+            if held_keys[Player.DESTROY]:
+                self.destroyBlock()
+
     
-    def attack_ray(self:Player)->(bool,Entity):
+    def attack_ray(self:Player, checkFor:str)->(bool,Entity):
         for y in self.demi_cercle_coords(centre=(self.x, self.y)):
             if self.look_direction == 0:
                 h_direction = -1
@@ -87,12 +92,10 @@ class Player(Character):
             if not hit_info.hit: continue
 
             target:Entity = hit_info.entity
-            if target.name != "enemis": continue
+
+            if target.name != checkFor: continue
             return (True, target)
         return (False, None)
-    
-    def ray_detection(self:Player):
-        self.attack_ray()
 
 
     def defense_self(self, damages:int, attacker:Character):
@@ -107,10 +110,20 @@ class Player(Character):
         if (datetime.datetime.now()-self.last_attack).total_seconds() < self._attack_duration: return
         self.last_attack = datetime.datetime.now()
         self.ATTACK_SOUND.play()
-        can_attack, target = self.attack_ray()
+        can_attack, target = self.attack_ray("enemis")
         if can_attack:
+            print("can attack")
             self.attack_target(target)
-
+    
+    def destroyBlock(self):
+        if (datetime.datetime.now()-self.last_attack).total_seconds() < self._attack_duration: return
+        self.last_attack = datetime.datetime.now()
+        self.ATTACK_SOUND.play()
+        can_destroy, target = self.attack_ray("cassable")
+        if can_destroy:
+            print("can destroy")
+            target:MurCassable
+            target.decrease_health()
 
 
 
