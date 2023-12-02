@@ -1,6 +1,6 @@
 from __future__ import annotations
 from ursina import *
-from character import Character
+from Character.character import Character
 import datetime
 
 class Enemis(Character):
@@ -33,7 +33,7 @@ class Enemis(Character):
             model='quad',
             scale=(width,height),
             position=position,
-            texture=textures[1],
+            texture=textures[0],
             collider="box"
         )
 
@@ -98,4 +98,17 @@ class HealthBar:
 
     def updateHealth(self):
         self.health.scale_x = self.enemis._current_health / self.enemis._max_health * self.border.scale_x
+
+class Frog(Enemis):
+    def __init__(self, position=(0,0), textures=('Assets/frog_left.png','Assets/frog_right.png'), height=1/2, width=1/2, attack=4, attack_range=0.8):
+        super().__init__(self, position=position, textures=textures, height=height, width=width, attack=attack, attack_range=attack_range)
+
+
+class Wolf(Enemis):
+    def __init__(self, position=(0,0), textures=('Assets/wolf2.png','Assets/wolf.png'), height=1, width=1, attack=5, attack_range=0.9):
+        super().__init__(self, position=position, textures=textures, height=height, width=width, attack=attack, attack_range=attack_range)
+
+class Human(Enemis):
+    def __init__(self, position=(0,0), textures=('Assets/human.png','Assets/human.png'), height=1.5, width=1.5, attack=8, attack_range=1.5):
+        super().__init__(self, position=position, textures=textures, height=height, width=width, attack=attack, attack_range=attack_range)
 

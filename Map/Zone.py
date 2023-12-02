@@ -1,5 +1,5 @@
 from ursina import *
-from character import Character
+from Character.character import Character
 
 class Zone(Entity):
     def __init__(self, name="zone", texture='Assets/sol.png', position=(0,0), enabled=False, scale=(1/2,1/2)):
@@ -57,3 +57,9 @@ class Activable(Zone):
 class End(Zone):
     def __init__(self, position=(0,0), texture='Assets/end.png', enabled=False):
         super().__init__(position=position, texture=texture, enabled=enabled)
+    
+    def update(self):
+        for entity in self.intersects().entities:
+            if entity.name == "player":
+                print("You Win")
+                return

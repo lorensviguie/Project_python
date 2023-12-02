@@ -1,8 +1,8 @@
 from __future__ import annotations
 from ursina import *
-from character import Character
+from Character.character import Character
 from dice import Dice
-from Zone import MurCassable
+from Map.Zone import MurCassable
 import datetime
 
 class Player(Character):
@@ -48,7 +48,7 @@ class Player(Character):
         self._textures = textures
         self.jump_height = 1
 
-        self.ATTACK_SOUND = Audio("Quack.mp3")
+        self.ATTACK_SOUND = Audio("Assets/Quack.mp3")
 
         self.health_bar = HealthBar(self)
         self.last_attack:datetime=datetime.datetime.now()
