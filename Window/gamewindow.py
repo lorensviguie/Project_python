@@ -25,8 +25,11 @@ class GameWindow(Window):
         if not self._player.is_alive():
             Character.CAN_MOVE = False
             self._player.disable()
-            #Window.CURRENT_WINDOW=2
+            Window.CURRENT_WINDOW=2
         else:
             Character.CAN_MOVE = True
             self._camera.position = (self._player.x, self._player.y, -10)
             self._map.showMap()
+    
+    def destroyWindow(self):
+        self._map.clearMap()

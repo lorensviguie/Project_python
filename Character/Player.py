@@ -2,13 +2,14 @@ from __future__ import annotations
 from ursina import *
 from Character.character import Character
 from dice import Dice
-from Map.Zone import MurCassable
+from Map.Zone import MurCassable, Levier
 import datetime
 
 class Player(Character):
     IS_DEBUG_MODE= False
     LEFT = 'a'
     RIGHT = 'd'
+    INTERRACT = 'e'
     JUMP = 'space'
     ATTACK = 'left mouse'
     DESTROY = 'right mouse'
@@ -52,6 +53,7 @@ class Player(Character):
 
         self.health_bar = HealthBar(self)
         self.last_attack:datetime=datetime.datetime.now()
+        self.last_interract:datetime=datetime.datetime.now()
 
 
 
@@ -78,6 +80,9 @@ class Player(Character):
 
             if held_keys[Player.DESTROY]:
                 self.destroyBlock()
+                
+            if held_keys[Player.INTERRACT]:
+                self.interract()
 
     
     def attack_ray(self:Player, checkFor:str)->(bool,Entity):
@@ -121,6 +126,15 @@ class Player(Character):
         if can_destroy:
             target:MurCassable
             target.decrease_health()
+    
+    def interract(self):
+        if (datetime.datetime.now()-self.last_interract).total_seconds() < 0.2: return
+        for entity in self.intersects().entities:
+            if type(entity)==Levier:
+                entity:Levier
+                entity.action()
+                self.last_interract = datetime.datetime.now()
+        return
 
 
 
@@ -141,9 +155,8 @@ class HealthBar:
 class Warrior(Player):
     def __init__(self,position=(0,11/2,0), textures=("Assets/warrior2.png","Assets/warrior.png"), enabled=True):
         super().__init__(textures, enabled, position=position)
-    def compute_damages(self, roll, target: Character):
-        print("🪓 Bonus: Axe in your face (+3 attack)")
-        return super().compute_damages(roll, target) + 3 
+    def damage(self, roll, target: Character):
+        return super().damage(roll, target) + 3 
 
 class Mage(Player):
     def __init__(self,position=(0,11/2,0), textures=("Assets/mage.png","Assets/mage.png"), enabled=True):
@@ -154,9 +167,8 @@ class Mage(Player):
 class Thief(Player):
     def __init__(self, position=(0,11/2,0), textures=("Assets/thief.png","Assets/thief1.png"), enabled=True):
         super().__init__(textures=textures, enabled=enabled, position=position)
-    def compute_damages(self, roll, target: Character):
-        print(f"🔪 Bonus: Sneacky attack (+{target.get_defense_value()} damages)")
-        return super().compute_damages(roll, target) + target.get_defense_value()
+    def damage(self, roll, target: Character):
+        return super().damage(roll, target) + target.defense_power()
 
 
 

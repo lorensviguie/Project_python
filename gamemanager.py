@@ -12,7 +12,7 @@ class GameManager:
         self._gameWindow = GameWindow(camera)
         self._winWindow = VictoryWindow(camera)
         self._deadWindow = DefeatWindow(camera)
-        self._windows = [self._mainWindow, self._gameWindow]
+        self._windows = [self._mainWindow, self._gameWindow, self._deadWindow, self._winWindow]
         self._current_window = 0
     
     @property
@@ -35,6 +35,8 @@ class GameManager:
         if Window.CURRENT_WINDOW != self._current_window:
             if self._current_window == 0 and Window.CURRENT_WINDOW == 1:
                 self._gameWindow._playerClasse = self._mainWindow.classe
+                
+            self._windows[self._current_window].destroyWindow()
             self._current_window = Window.CURRENT_WINDOW
             self._windows[self._current_window].showWindow()
         self._windows[self._current_window].update()

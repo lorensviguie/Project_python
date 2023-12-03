@@ -154,6 +154,10 @@ class Character(Entity):
     def current_zone(self)->(int,int):
         return (round(self.x*2)/2,round(self.y*2)/2)
     
+    @property
+    def defense_power(self):
+        return self._defense_power
+    
     def damage(self, roll, target:Character):
         return self._attack_power + roll
     

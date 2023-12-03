@@ -5,8 +5,8 @@ class MainWindow(Window):
 
     def __init__(self, camera, cameraPosition=(-10,-10)):
         super().__init__(camera=camera, cameraPosition=cameraPosition)
-        self.create_game_window()
         self.classe = "Warrior"
+        self._camera.z=-20
     
     def on_warrior_button_click(self):
         if Window.CURRENT_WINDOW != 0: return
@@ -23,7 +23,7 @@ class MainWindow(Window):
         self.classe = "Thief"
         print("Bouton Thief cliqué !")
 
-    def create_game_window(self):
+    def createWindow(self):
         self.text1 = Text(text="WELCOME TO DUCK.EXE", scale=4, origin=(0, -3))
         self.text2 = Text(text="Choose a class", scale=2, origin=(0, -3.5), color=color.cyan)
         self.warrior = Text(text="Warrior", scale=1, origin=(4, 5))
@@ -40,8 +40,8 @@ class MainWindow(Window):
         self.duck2 = Entity(model='quad', texture='/base.png', scale=(1.5, 1.5), position=(-10, -10, -1))
         self.duck3 = Entity(model='quad', texture='/base.png', scale=(1.5, 1.5), position=(-7, -10, -1))
 
-        self.music = Audio("Assets/musique_Tetris.mp3", loop=True)
-        self.music.play()
+        #self.music = Audio("Assets/musique_Tetris.mp3", loop=True)
+        #self.music.play()
 
     def on_play_button_click(self)->str:
         if Window.CURRENT_WINDOW != 0: return

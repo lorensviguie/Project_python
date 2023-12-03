@@ -10,6 +10,13 @@ class Window:
     
     def showWindow(self):
         self._camera.x, self._camera.y = self._cameraPosition
+        self.createWindow()
     
     def update(self):
+        pass
+    
+    def destroyWindow(self):
+        pass
+
+    def createWindow(self):
         pass
