@@ -65,7 +65,7 @@ class Activable(Zone):
 
 class Levier(Zone):
     def __init__(self, map,position=(0,0), texture='Assets/levierOff.png', enabled=True):
-        super().__init__(position=position, texture=texture, enabled=enabled, scale=(1/4,1/4))
+        super().__init__(position=position, texture=texture, enabled=enabled, scale=(1/3,1/3))
         self._map = map
         self._status = False
     

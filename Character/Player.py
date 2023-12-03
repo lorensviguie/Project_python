@@ -1,6 +1,7 @@
 from __future__ import annotations
 from ursina import *
 from Character.character import Character
+from Character.enemis import Enemis
 from dice import Dice
 from Map.Zone import MurCassable, Levier
 import datetime
@@ -85,7 +86,7 @@ class Player(Character):
                 self.interract()
 
     
-    def attack_ray(self:Player, checkFor:str)->(bool,Entity):
+    def attack_ray(self:Player, checkFor)->(bool,Entity):
         for y in self.demi_cercle_coords(centre=(self.x, self.y)):
             if self.look_direction == 0:
                 h_direction = -1
@@ -97,7 +98,7 @@ class Player(Character):
 
             target:Entity = hit_info.entity
 
-            if target.name != checkFor: continue
+            if not issubclass(type(target),checkFor): continue
             return (True, target)
         return (False, None)
 
@@ -116,7 +117,7 @@ class Player(Character):
         if (datetime.datetime.now()-self.last_attack).total_seconds() < self._attack_duration: return
         self.last_attack = datetime.datetime.now()
         self.ATTACK_SOUND.play()
-        can_attack, target = self.attack_ray("enemis")
+        can_attack, target = self.attack_ray(Enemis)
         if can_attack:
             self.attack_target(target)
     
@@ -125,7 +126,7 @@ class Player(Character):
         if (datetime.datetime.now()-self.last_attack).total_seconds() < self._attack_duration: return
         self.last_attack = datetime.datetime.now()
         self.ATTACK_SOUND.play()
-        can_destroy, target = self.attack_ray("cassable")
+        can_destroy, target = self.attack_ray(MurCassable)
         if can_destroy:
             target:MurCassable
             target.decrease_health()
@@ -167,7 +168,7 @@ class Mage(Player):
     def __init__(self,position=(0,11/2,0), textures=("Assets/thief.png","Assets/thief1.png"), enabled=True):
         super().__init__(textures=textures, enabled=enabled, position=position)
     def defense_self(self, damages: int, attacker: Character):
-        return super().defense_self(damages, attacker,reduce_dmg=0.5)
+        return super().defense_self(damages, attacker,reduce_dmg=0.8)
 
 class Thief(Player):
     def __init__(self, position=(0,11/2,0), textures=("Assets/thief.png","Assets/thief1.png"), enabled=True):

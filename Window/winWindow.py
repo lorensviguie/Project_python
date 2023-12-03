@@ -11,8 +11,7 @@ class VictoryWindow(Window):
                                         highlight_color=color.white)
 
     def on_play_again_click(self):
-        if Window.CURRENT_WINDOW != 1: return
-        print("Play Again button clicked!")
+        if Window.CURRENT_WINDOW != 3: return
         self.destroy_window()
         Window.CURRENT_WINDOW = 0
 
