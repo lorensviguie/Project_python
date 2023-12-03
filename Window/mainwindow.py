@@ -34,9 +34,9 @@ class MainWindow(Window):
         self.mage_button = Button(scale=(0.3, 0.3), origin=(0, 0), color=color.clear, on_click=self.on_mage_button_click)
         self.thief_button = Button(scale=(0.3, 0.3), origin=(-1.2, 0), color=color.clear, on_click=self.on_thief_button_click)
 
-        self.duck1 = Entity(model='quad', texture='/base.png', scale=(1.5, 1.5), position=(-13, -10, -1))
-        self.duck2 = Entity(model='quad', texture='/base.png', scale=(1.5, 1.5), position=(-10, -10, -1))
-        self.duck3 = Entity(model='quad', texture='/base.png', scale=(1.5, 1.5), position=(-7, -10, -1))
+        self.duck1 = Entity(model='quad', texture='/warrior.png', scale=(1.5, 1.5), position=(-13, -10, -1))
+        self.duck2 = Entity(model='quad', texture='/mage.png', scale=(1.5, 1.5), position=(-10, -10, -1))
+        self.duck3 = Entity(model='quad', texture='/thief1.png', scale=(1.5, 1.5), position=(-7, -10, -1))
 
     def on_play_button_click(self)->str:
         if Window.CURRENT_WINDOW != 0: return

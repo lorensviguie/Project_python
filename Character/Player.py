@@ -159,13 +159,13 @@ class HealthBar:
 
 
 class Warrior(Player):
-    def __init__(self,position=(0,11*0.5,0), textures=("Assets/thief.png","Assets/thief1.png"), enabled=True):
+    def __init__(self,position=(0,11*0.5,0), textures=("Assets/warrior2.png","Assets/warrior.png"), enabled=True):
         super().__init__(textures=textures, enabled=enabled, position=position)
     def damage(self, roll, target: Character):
         return super().damage(roll, target) + 3 
 
 class Mage(Player):
-    def __init__(self,position=(0,11/2,0), textures=("Assets/thief.png","Assets/thief1.png"), enabled=True):
+    def __init__(self,position=(0,11/2,0), textures=("Assets/mage1.png","Assets/mage.png"), enabled=True):
         super().__init__(textures=textures, enabled=enabled, position=position)
     def defense_self(self, damages: int, attacker: Character):
         return super().defense_self(damages, attacker,reduce_dmg=0.8)
