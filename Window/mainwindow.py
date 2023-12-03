@@ -1,27 +1,25 @@
 from ursina import *
 from Window.window import Window
+from Character.Player import *
 
 class MainWindow(Window):
 
     def __init__(self, camera, cameraPosition=(-10,-10)):
         super().__init__(camera=camera, cameraPosition=cameraPosition)
-        self.classe = "Warrior"
+        self.classe = Warrior
         self._camera.z=-20
     
     def on_warrior_button_click(self):
         if Window.CURRENT_WINDOW != 0: return
-        self.classe = "Warrior"
-        print("Bouton Warrior cliqué !")
+        self.classe = Warrior
 
     def on_mage_button_click(self):
         if Window.CURRENT_WINDOW != 0: return
-        self.classe = "Mage"
-        print("Bouton Mage cliqué !")
+        self.classe = Mage
 
     def on_thief_button_click(self):
         if Window.CURRENT_WINDOW != 0: return
-        self.classe = "Thief"
-        print("Bouton Thief cliqué !")
+        self.classe = Thief
 
     def createWindow(self):
         self.text1 = Text(text="WELCOME TO DUCK.EXE", scale=4, origin=(0, -3))
@@ -40,14 +38,10 @@ class MainWindow(Window):
         self.duck2 = Entity(model='quad', texture='/base.png', scale=(1.5, 1.5), position=(-10, -10, -1))
         self.duck3 = Entity(model='quad', texture='/base.png', scale=(1.5, 1.5), position=(-7, -10, -1))
 
-        #self.music = Audio("Assets/musique_Tetris.mp3", loop=True)
-        #self.music.play()
-
     def on_play_button_click(self)->str:
         if Window.CURRENT_WINDOW != 0: return
         print("Bouton PLAY cliqué !")
-        Quack = Audio("Assets/Quack.mp3")
-        Quack.play()
+        Audio("Assets/Quack.mp3")
         self.destroyWindow()
         Window.CURRENT_WINDOW = 1
 

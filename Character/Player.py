@@ -106,10 +106,12 @@ class Player(Character):
         super().defense_self(damages * reduce_dmg, attacker)
         self.health_bar.updateHealth()
         
+        
     def heal(self, heal_value):
         super().heal(heal_value)
         self.health_bar.updateHealth()
     
+
     def attack(self):
         if (datetime.datetime.now()-self.last_attack).total_seconds() < self._attack_duration: return
         self.last_attack = datetime.datetime.now()
@@ -118,6 +120,7 @@ class Player(Character):
         if can_attack:
             self.attack_target(target)
     
+
     def destroyBlock(self):
         if (datetime.datetime.now()-self.last_attack).total_seconds() < self._attack_duration: return
         self.last_attack = datetime.datetime.now()
@@ -127,6 +130,7 @@ class Player(Character):
             target:MurCassable
             target.decrease_health()
     
+
     def interract(self):
         if (datetime.datetime.now()-self.last_interract).total_seconds() < 0.2: return
         for entity in self.intersects().entities:
@@ -152,14 +156,15 @@ class HealthBar:
 
 
 
+
 class Warrior(Player):
-    def __init__(self,position=(0,11/2,0), textures=("Assets/warrior2.png","Assets/warrior.png"), enabled=True):
-        super().__init__(textures, enabled, position=position)
+    def __init__(self,position=(0,11*0.5,0), textures=("Assets/thief.png","Assets/thief1.png"), enabled=True):
+        super().__init__(textures=textures, enabled=enabled, position=position)
     def damage(self, roll, target: Character):
         return super().damage(roll, target) + 3 
 
 class Mage(Player):
-    def __init__(self,position=(0,11/2,0), textures=("Assets/mage.png","Assets/mage.png"), enabled=True):
+    def __init__(self,position=(0,11/2,0), textures=("Assets/thief.png","Assets/thief1.png"), enabled=True):
         super().__init__(textures=textures, enabled=enabled, position=position)
     def defense_self(self, damages: int, attacker: Character):
         return super().defense_self(damages, attacker,reduce_dmg=0.5)

@@ -90,6 +90,7 @@ class Enemis(Character):
         self.attack_ray()
         self.sensore_ray()
 
+
 class HealthBar:
     def __init__(self, enemis: Enemis):
         self.enemis = enemis
@@ -98,6 +99,10 @@ class HealthBar:
 
     def updateHealth(self):
         self.health.scale_x = self.enemis._current_health / self.enemis._max_health * self.border.scale_x
+
+
+
+
 
 class Frog(Enemis):
     def __init__(self, position=(0,0), textures=('Assets/frog_left.png','Assets/frog_right.png'), height=1/2, width=1/2, attack=4, attack_range=0.8, **kargs):

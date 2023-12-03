@@ -12,23 +12,23 @@ class Zone(Entity):
         return self._is_spawn
 
 class Sol(Zone):
-    def __init__(self, map, position=(0,0), texture='Assets/sol.png', enabled=False):
+    def __init__(self, map, position=(0,0), texture='Assets/sol.png', enabled=True):
         super().__init__(position=position, texture=texture, enabled=enabled)
         
 class SolVolant(Zone):
-    def __init__(self, map, position=(0,0), texture='Assets/sol.png', enabled=False):
+    def __init__(self, map, position=(0,0), texture='Assets/sol.png', enabled=True):
         super().__init__(position=position, texture=texture, enabled=enabled)
 
 class Mur(Zone):
-    def __init__(self, map, position=(0,0), texture='Assets/mur.png', enabled=False):
+    def __init__(self, map, position=(0,0), texture='Assets/mur.png', enabled=True):
         super().__init__(position=position, texture=texture, enabled=enabled)
 
 class MurPlein(Zone):
-    def __init__(self, map, position=(0,0), texture='Assets/murplein.png', enabled=False):
+    def __init__(self, map, position=(0,0), texture='Assets/murplein.png', enabled=True):
         super().__init__(position=position, texture=texture, enabled=enabled)
 
 class MurCassable(Zone):
-    def __init__(self, map, name="cassable", position=(0,0), texture='Assets/soldestructible.png', enabled=False):
+    def __init__(self, map, name="cassable", position=(0,0), texture='Assets/soldestructible.png', enabled=True):
         super().__init__(name=name,position=position, texture=texture, enabled=enabled)
         self._health = 2
     
@@ -39,7 +39,7 @@ class MurCassable(Zone):
             self._is_spawn = False
 
 class Heal(Zone):
-    def __init__(self, map, position=(0,0), texture='Assets/health.png', enabled=False, scale=(1/4,1/4)):
+    def __init__(self, map, position=(0,0), texture='Assets/health.png', enabled=True, scale=(1/4,1/4)):
         super().__init__(position=position, texture=texture, enabled=enabled, scale=scale)
     
     def update(self):
@@ -52,7 +52,7 @@ class Heal(Zone):
                 return
 
 class Activable(Zone):
-    def __init__(self, map, position=(0,0), texture='Assets/activablesol.png', enabled=False):
+    def __init__(self, map, position=(0,0), texture='Assets/activablesol.png', enabled=True):
         super().__init__(position=position, texture=texture, enabled=enabled)
         self._map = map
     
@@ -61,9 +61,10 @@ class Activable(Zone):
             self._is_spawn = not self._map.levier[0]
         else:
             self._is_spawn = not self._map.levier[1]
+        self.enabled = self._is_spawn
 
 class Levier(Zone):
-    def __init__(self, map,position=(0,0), texture='Assets/levierOff.png', enabled=False):
+    def __init__(self, map,position=(0,0), texture='Assets/levierOff.png', enabled=True):
         super().__init__(position=position, texture=texture, enabled=enabled, scale=(1/4,1/4))
         self._map = map
         self._status = False
@@ -82,7 +83,7 @@ class Levier(Zone):
 
 
 class End(Zone):
-    def __init__(self, map, position=(0,0), texture='Assets/end.png', enabled=False):
+    def __init__(self, map, position=(0,0), texture='Assets/end.png', enabled=True):
         super().__init__(position=position, texture=texture, enabled=enabled)
     
     def update(self):

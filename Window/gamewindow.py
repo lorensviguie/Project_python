@@ -18,7 +18,7 @@ class GameWindow(Window):
         self._map=Map()
         loop.run_until_complete(self._map.initMap())
         self._camera.position=(0.5,6,-15)
-        self._map.spawnPlayer(eval(self._playerClasse))
+        self._map.spawnPlayer(self._playerClasse)
         self._player = self._map.player
     
     def update(self):
@@ -28,7 +28,10 @@ class GameWindow(Window):
             Window.CURRENT_WINDOW=2
         else:
             Character.CAN_MOVE = True
-            self._camera.position = (self._player.x, self._player.y, -10)
+            if Map.ON_PLAYER_VISION:
+                self._camera.position = (self._player.x, self._player.y, -10)
+            else:
+                self._camera.position = (8,5,-30)
             self._map.showMap()
     
     def destroyWindow(self):
