@@ -1,5 +1,5 @@
 # **Project python**
-*Groupe n°15 : MACE Léo, DERONNE Mathis, VIGUIS Lorens*  
+*Groupe n°15 : MACE Léo, DERONNE Mathis, VIGUIE Lorens*  
 
 ## Prérequis 
 **[🐍Python v3.10](https://www.python.org/downloads/) [📚Ursina](https://www.ursinaengine.org) [📚Numpy](https://numpy.org)**
