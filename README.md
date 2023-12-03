@@ -3,6 +3,7 @@
 ## prérequis 
 ```powershell
 pip install ursina
+Utilisation de la version 3.10 de Python
 ```
 [doc officiel](https://www.ursinaengine.org/installation.html)
 
