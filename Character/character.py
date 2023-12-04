@@ -53,6 +53,9 @@ class Character(Entity):
         if not self.touch_floor() and self.enabled:
             self.fall()
         
+        if self.touch_roof():
+            self.y_speed = 0
+        
         self.ray_detection()
     
 
@@ -88,9 +91,10 @@ class Character(Entity):
     # Méthodes d'actions
 
     def jump(self)->None:
-        if self.touch_roof(): return
-
-        self.y_speed = self.jump_speed
+        if self.touch_roof(): 
+            self.y_speed = 0
+        else:
+            self.y_speed = self.jump_speed
         self.y += self.jump_speed * time.dt
         return
     
