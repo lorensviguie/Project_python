@@ -77,7 +77,7 @@ class Map(Entity):
         """
         if classe not in [Thief, Warrior, Mage]:
             classe = Warrior
-        self._player = classe(position=(0,11*Map.ECHELLE,0), enabled=True)
+        self._player = classe(position=(0,12*Map.ECHELLE,0), enabled=True)
         self.player._gravity = True
 
 

@@ -174,7 +174,7 @@ class Thief(Player):
     def __init__(self, position=(0,11/2,0), textures=("Assets/thief.png","Assets/thief1.png"), enabled=True):
         super().__init__(textures=textures, enabled=enabled, position=position)
     def damage(self, roll, target: Character):
-        return super().damage(roll, target) + target.defense_power()
+        return super().damage(roll, target) + target.defense_power
 
 
 
