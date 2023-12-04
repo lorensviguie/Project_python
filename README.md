@@ -82,3 +82,16 @@ Vous ne vous aventurez pas dans le danger pour aucunes raison. La raison la voic
 
 - Système de visualisation de la carte via un variable
 ```
+
+## Touches :
+
+<br>
+
+```
+- Q             - Gauche
+- D             - Droite
+- Space         - Jump
+- E             - Interragir
+- Click gauche  - Attaquer
+- Click droit   - Detruire
+```
