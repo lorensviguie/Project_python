@@ -14,7 +14,7 @@ class GameManager:
         self._deadWindow = DefeatWindow(camera)
         self._windows = [self._mainWindow, self._gameWindow, self._deadWindow, self._winWindow]
         self._current_window = 0
-        self._music = Audio("Assets/musique_Tetris.mp3", loop=True)
+        #self._music = Audio("Assets/musique_Tetris.mp3", loop=True)
     
     @property
     def mainWindow(self):

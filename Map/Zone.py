@@ -72,7 +72,7 @@ class Levier(Zone):
     def action(self):
         self._status = not self._status
         self._map.changeLevierStatus(int(self.x), self._status)
-        Audio("Assets/interrupteur.mp3").play()
+        #Audio("Assets/interrupteur.mp3").play()
         
     
     def update(self):

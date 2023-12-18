@@ -50,7 +50,7 @@ class Player(Character):
         self._textures = textures
         self.jump_height = 1
 
-        self.ATTACK_SOUND = Audio("Assets/Quack.mp3")
+        #self.ATTACK_SOUND = Audio("Assets/Quack.mp3")
 
         self.health_bar = HealthBar(self)
         self.last_attack:datetime=datetime.datetime.now()
@@ -116,7 +116,7 @@ class Player(Character):
     def attack(self):
         if (datetime.datetime.now()-self.last_attack).total_seconds() < self._attack_duration: return
         self.last_attack = datetime.datetime.now()
-        self.ATTACK_SOUND.play()
+        #self.ATTACK_SOUND.play()
         can_attack, target = self.attack_ray(Enemis)
         if can_attack:
             self.attack_target(target)
@@ -125,7 +125,7 @@ class Player(Character):
     def destroyBlock(self):
         if (datetime.datetime.now()-self.last_attack).total_seconds() < self._attack_duration: return
         self.last_attack = datetime.datetime.now()
-        self.ATTACK_SOUND.play()
+        #self.ATTACK_SOUND.play()
         can_destroy, target = self.attack_ray(MurCassable)
         if can_destroy:
             target:MurCassable

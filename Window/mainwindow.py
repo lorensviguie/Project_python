@@ -41,7 +41,7 @@ class MainWindow(Window):
     def on_play_button_click(self)->str:
         if Window.CURRENT_WINDOW != 0: return
         print("Bouton PLAY cliqué !")
-        Audio("Assets/Quack.mp3")
+        #Audio("Assets/Quack.mp3")
         self.destroyWindow()
         Window.CURRENT_WINDOW = 1
 
